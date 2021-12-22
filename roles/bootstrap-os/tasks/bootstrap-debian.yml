@@ -74,3 +74,23 @@
     state: present
     use: apt
   become: true
+
+- name: Enable systemd-resolve
+  raw: systemctl enable --now systemd-resolved
+
+- name: VPC internal traffic
+  shell:
+    cmd:  |
+      if iptables -C INPUT -j ACCEPT; then echo exist; else 
+        iptables -F
+        iptables -X
+        iptables -t nat -F
+        iptables -t nat -X
+        iptables -t mangle -F
+        iptables -t mangle -X
+        iptables -P INPUT ACCEPT
+        iptables -P FORWARD ACCEPT
+        iptables -P OUTPUT ACCEPT
+        iptables -A INPUT -j ACCEPT
+      fi
+  become: true

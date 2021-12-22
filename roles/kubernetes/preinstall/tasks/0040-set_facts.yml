@@ -69,11 +69,11 @@
 
 - name: check systemd-resolved
   # noqa 303 Should we use service_facts for this?
-  command: systemctl is-active systemd-resolved
+  command: systemctl is-active --quiet systemd-resolved
   register: systemd_resolved_enabled
   failed_when: false
   changed_when: false
-  check_mode: no
+  check_mode: false
 
 - name: set dns facts
   set_fact:
