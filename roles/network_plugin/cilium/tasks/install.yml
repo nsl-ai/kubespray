@@ -48,6 +48,7 @@
     - {name: cilium, file: cilium-ds.yml, type: ds}
     - {name: cilium, file: cilium-deploy.yml, type: deploy}
     - {name: cilium, file: cilium-sa.yml, type: sa}
+    - {name: cilium, file: bgp-config.yml, type: cm}      
   register: cilium_node_manifests
   when:
     - inventory_hostname in groups['kube_control_plane']

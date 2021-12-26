@@ -1,3 +1,4 @@
+# -e node=NODE_NAME -e reset_nodes=false -e allow_ungraceful_removal=true
 ---
 - name: Check ansible version
   import_playbook: ansible_version.yml

@@ -51,6 +51,8 @@ cilium_native_routing_cidr: ""
 
 # IPsec based transparent encryption between nodes
 cilium_ipsec_enabled: false
+cilium_bgp_enabled: false
+
 
 # Hubble
 ### Enable Hubble without install

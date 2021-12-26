@@ -107,6 +107,10 @@
     - fastestmirror.stat.exists
     - not centos_fastestmirror_enabled
 
+- name: Enable systemd-resolve
+  raw: systemctl disable --now cockpit.socket  
+    
+
 # libselinux-python is required on SELinux enabled hosts
 # See https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#managed-node-requirements
 - name: Install libselinux python package

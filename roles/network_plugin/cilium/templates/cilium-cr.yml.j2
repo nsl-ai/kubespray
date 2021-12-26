@@ -45,6 +45,13 @@ rules:
   - list
   - watch
 - apiGroups:
+  - ""
+  resources:
+  # to perform LB IP allocation for BGP
+  - services/status
+  verbs:
+  - update  
+- apiGroups:
   - cilium.io
   resources:
   - ciliumnetworkpolicies
@@ -154,6 +161,16 @@ rules:
   - ""
   resources:
   - pods
+  - pods/finalizers
+  verbs:
+  - get
+  - list
+  - watch
+  - update
+  - delete
+- apiGroups:
+  - ""
+  resources:
   - nodes
   verbs:
   - get

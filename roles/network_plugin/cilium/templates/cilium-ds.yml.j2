@@ -171,6 +171,11 @@ spec:
           name: cilium-ipsec-secrets
           readOnly: true
 {% endif %}
+{% if cilium_bgp_enabled %}
+        - mountPath: /var/lib/cilium/bgp
+          name: bgp-config-path
+          readOnly: true
+{% endif %}
 {% if cilium_hubble_install %}
         - mountPath: /var/lib/cilium/tls/hubble
           name: hubble-tls
@@ -298,6 +303,11 @@ spec:
       - name: cilium-ipsec-secrets
         secret:
           secretName: cilium-ipsec-keys
+{% endif %}
+{% if cilium_bgp_enabled %}
+      - name: bgp-config-path
+        configMap:
+          name: bgp-config
 {% endif %}
 {% if cilium_hubble_install %}
       - name: hubble-tls
