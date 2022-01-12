@@ -1,0 +1,16 @@
+---
+## Directory where etcd data stored
+etcd_data_dir: /var/lib/etcd
+
+## Directory where the binaries will be installed
+bin_dir: /usr/local/bin
+
+## External LB example config
+apiserver_loadbalancer_domain_name: "10.2.18.5"
+loadbalancer_apiserver:
+   address: 10.2.18.5
+   port: 6443
+
+## Internal loadbalancers for apiservers
+loadbalancer_apiserver_localhost: false
+no_proxy_exclude_workers: true

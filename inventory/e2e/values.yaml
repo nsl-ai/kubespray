@@ -1,0 +1,32 @@
+bgp:
+  enabled: false
+  announce:
+    podCIDR: true
+containerRuntime:
+  integration:  containerd
+hubble:
+  enabled: true
+  relay:
+    enabled: true
+  ui:
+    enabled: true
+  metrics:
+    enabled: "{dns,drop,tcp,flow,port-distribution,icmp,http}"
+etcd:
+  enabled: true
+  k8sService: false
+  endpoints:
+    - https://10.2.18.10:2379
+    - https://10.2.18.9:2379
+    - https://10.2.18.8:2379
+  ssl: true
+operator:
+  replicas: 1
+config.bpfMasquerade: true    
+kubeProxyReplacement: strict
+ipam:
+  mode: kubernetes
+loadBalancer:
+  algorithm: maglev
+k8sServiceHost:  10.2.18.5
+k8sServicePort: 6443
