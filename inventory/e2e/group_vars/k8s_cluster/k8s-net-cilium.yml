@@ -4,15 +4,8 @@ cilium_version: v1.11.0
 cilium_config_extra_vars:
   bpf-lb-algorithm: "maglev"
   bgp-announce-pod-cidr: "false"
-  disable-cnp-status-updates: "true"
-  enable-auto-protect-node-port-range: "true"
-  enable-bpf-clock-probe: "true"
   enable-bpf-masquerade: "true"
-  enable-endpoint-health-checking: "true"
-  enable-health-check-nodeport: "true"
-  enable-health-checking: "true"
   enable-remote-node-identity: "true"
-  enable-session-affinity: "true"
 cilium_bgp_enabled: false  
 cilium_bgp_peer: "10.2.18.5"
 cilium_enable_hubble: true
@@ -25,5 +18,4 @@ cilium_hubble_metrics:
   - tcp
   - flow
   - port-distribution
-  - icmp
   - http
