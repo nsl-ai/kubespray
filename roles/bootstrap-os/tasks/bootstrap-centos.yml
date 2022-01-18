@@ -1,26 +1,4 @@
 ---
-- name: Import elrepo key
-  ansible.builtin.rpm_key:
-    state: present
-    key: https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
-- name: Add ELRepo
-  yum:
-    name: https://www.elrepo.org/elrepo-release-8.el8.elrepo.noarch.rpm
-    state: latest
-- name: Install latest mainline kernel
-  register: kernel_update
-  yum:
-    name: kernel-ml
-    state: latest
-    enablerepo: elrepo-kernel
-- name: Remake grub config to pick up new kernel
-  command: grub2-mkconfig -o /boot/grub2/grub.cfg
-- name: Restart server to ensure configuration changes take hold
-  reboot:
-  become: true
-  when: 
-    - kernel_update.changed
-    
 - name: Gather host facts to get ansible_distribution_version ansible_distribution_major_version
   setup:
     gather_subset: '!all'
@@ -129,31 +107,10 @@
     - fastestmirror.stat.exists
     - not centos_fastestmirror_enabled
 
-- name: Enable systemd-resolve
-  raw: systemctl disable --now cockpit.socket  
-    
-
 # libselinux-python is required on SELinux enabled hosts
 # See https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#managed-node-requirements
 - name: Install libselinux python package
   package:
     name: "{{ ( (ansible_distribution_major_version | int) < 8) | ternary('libselinux-python','python3-libselinux') }}"
     state: present
-  become: true
-
-- name: VPC internal traffic
-  shell:
-    cmd:  |
-      if iptables -C INPUT -j ACCEPT; then echo exist; else 
-        iptables -F
-        iptables -X
-        iptables -t nat -F
-        iptables -t nat -X
-        iptables -t mangle -F
-        iptables -t mangle -X
-        iptables -P INPUT ACCEPT
-        iptables -P FORWARD ACCEPT
-        iptables -P OUTPUT ACCEPT
-        iptables -A INPUT -j ACCEPT
-      fi
   become: true
