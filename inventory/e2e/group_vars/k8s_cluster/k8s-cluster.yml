@@ -228,7 +228,7 @@ default_kubelet_config_dir: "{{ kube_config_dir }}/dynamic_kubelet_dir"
 dynamic_kubelet_configuration_dir: "{{ kubelet_config_dir | default(default_kubelet_config_dir) }}"
 
 # pod security policy (RBAC must be enabled either by having 'RBAC' in authorization_modes or kubeadm enabled)
-podsecuritypolicy_enabled: false
+podsecuritypolicy_enabled: true
 
 # Custom PodSecurityPolicySpec for restricted policy
 # podsecuritypolicy_restricted_spec: {}
@@ -246,20 +246,20 @@ podsecuritypolicy_enabled: false
 # kubelet_enforce_node_allocatable: pods
 
 ## Optionally reserve resources for OS system daemons.
-# system_reserved: true
+system_reserved: true
 ## Uncomment to override default values
-# system_memory_reserved: 512Mi
-# system_cpu_reserved: 500m
+system_memory_reserved: 512Mi
+system_cpu_reserved: 250m
 ## Reservation for master hosts
-# system_master_memory_reserved: 256Mi
-# system_master_cpu_reserved: 250m
+system_master_memory_reserved: 512Mi
+system_master_cpu_reserved: 500m
 
 # An alternative flexvolume plugin directory
 # kubelet_flexvolumes_plugins_dir: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
 
 ## Supplementary addresses that can be added in kubernetes ssl keys.
 ## That can be useful for example to setup a keepalived virtual IP
-supplementary_addresses_in_ssl_keys: [10.2.18.5, 164.52.221.153]
+supplementary_addresses_in_ssl_keys: [10.2.18.5, k8-dev.ailabs.click]
 
 ## Running on top of openstack vms with cinder enabled may lead to unschedulable pods due to NoVolumeZoneConflict restriction in kube-scheduler.
 ## See https://github.com/kubernetes-sigs/kubespray/issues/2141
@@ -288,32 +288,32 @@ persistent_volumes_enabled: false
 # nvidia_gpu_device_plugin_container: "k8s.gcr.io/nvidia-gpu-device-plugin@sha256:0842734032018be107fa2490c98156992911e3e1f2a21e059ff0105b07dd8e9e"
 
 ## Support tls min version, Possible values: VersionTLS10, VersionTLS11, VersionTLS12, VersionTLS13.
-# tls_min_version: ""
+tls_min_version: "VersionTLS12"
 
 ## Support tls cipher suites.
-# tls_cipher_suites: {}
+tls_cipher_suites: 
 #   - TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
 #   - TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256
-#   - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+  - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
 #   - TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
-#   - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
-#   - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
-#   - TLS_ECDHE_ECDSA_WITH_RC4_128_SHA
-#   - TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA
-#   - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
-#   - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
-#   - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+  - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+  - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+  - TLS_ECDHE_ECDSA_WITH_RC4_128_SHA
+  # - TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA
+  # - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+  # - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+  - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
 #   - TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
-#   - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-#   - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
-#   - TLS_ECDHE_RSA_WITH_RC4_128_SHA
+  - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+  - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+  - TLS_ECDHE_RSA_WITH_RC4_128_SHA
 #   - TLS_RSA_WITH_3DES_EDE_CBC_SHA
 #   - TLS_RSA_WITH_AES_128_CBC_SHA
 #   - TLS_RSA_WITH_AES_128_CBC_SHA256
-#   - TLS_RSA_WITH_AES_128_GCM_SHA256
+  - TLS_RSA_WITH_AES_128_GCM_SHA256
 #   - TLS_RSA_WITH_AES_256_CBC_SHA
-#   - TLS_RSA_WITH_AES_256_GCM_SHA384
-#   - TLS_RSA_WITH_RC4_128_SHA
+  - TLS_RSA_WITH_AES_256_GCM_SHA384
+  - TLS_RSA_WITH_RC4_128_SHA
 
 ## Amount of time to retain events. (default 1h0m0s)
 event_ttl_duration: "1h0m0s"
