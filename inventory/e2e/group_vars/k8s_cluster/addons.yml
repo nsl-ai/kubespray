@@ -90,8 +90,8 @@ rbd_provisioner_enabled: false
 # rbd_provisioner_reclaim_policy: Delete
 
 # Nginx ingress controller deployment
-ingress_nginx_enabled: true
-ingress_nginx_host_network: true
+ingress_nginx_enabled: false
+ingress_nginx_host_network: false
 ingress_publish_status_address: "164.52.221.153"
 # ingress_nginx_namespace: "ingress-nginx"
 # ingress_nginx_insecure_port: 80
