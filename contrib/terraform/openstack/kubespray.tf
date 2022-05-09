@@ -24,6 +24,7 @@ module "ips" {
   network_name                  = var.network_name
   router_id                     = module.network.router_id
   k8s_nodes                     = var.k8s_nodes
+  k8s_masters                   = var.k8s_masters
   k8s_master_fips               = var.k8s_master_fips
   bastion_fips                  = var.bastion_fips
   router_internal_port_id       = module.network.router_internal_port_id
@@ -44,6 +45,7 @@ module "compute" {
   number_of_bastions                           = var.number_of_bastions
   number_of_k8s_nodes_no_floating_ip           = var.number_of_k8s_nodes_no_floating_ip
   number_of_gfs_nodes_no_floating_ip           = var.number_of_gfs_nodes_no_floating_ip
+  k8s_masters                                  = var.k8s_masters
   k8s_nodes                                    = var.k8s_nodes
   bastion_root_volume_size_in_gb               = var.bastion_root_volume_size_in_gb
   etcd_root_volume_size_in_gb                  = var.etcd_root_volume_size_in_gb
@@ -70,6 +72,7 @@ module "compute" {
   flavor_bastion                               = var.flavor_bastion
   k8s_master_fips                              = module.ips.k8s_master_fips
   k8s_master_no_etcd_fips                      = module.ips.k8s_master_no_etcd_fips
+  k8s_masters_fips                             = module.ips.k8s_masters_fips
   k8s_node_fips                                = module.ips.k8s_node_fips
   k8s_nodes_fips                               = module.ips.k8s_nodes_fips
   bastion_fips                                 = module.ips.bastion_fips
@@ -81,7 +84,6 @@ module "compute" {
   supplementary_node_groups                    = var.supplementary_node_groups
   master_allowed_ports                         = var.master_allowed_ports
   worker_allowed_ports                         = var.worker_allowed_ports
-  wait_for_floatingip                          = var.wait_for_floatingip
   use_access_ip                                = var.use_access_ip
   master_server_group_policy                   = var.master_server_group_policy
   node_server_group_policy                     = var.node_server_group_policy
@@ -90,8 +92,10 @@ module "compute" {
   extra_sec_groups_name                        = var.extra_sec_groups_name
   group_vars_path                              = var.group_vars_path
   port_security_enabled                        = var.port_security_enabled
-
-  network_id = module.network.router_id
+  force_null_port_security                     = var.force_null_port_security
+  network_router_id                            = module.network.router_id
+  network_id                                   = module.network.network_id
+  use_existing_network                         = var.use_existing_network
 }
 
 output "private_subnet_id" {
